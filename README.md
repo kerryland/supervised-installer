@@ -14,7 +14,7 @@ This method is considered advanced and should only be used if one is an expert i
 
 Run the following commands as root (`su -` or `sudo su -` on machines with sudo installed):
 
-Step 1: Install the following dependacy's with this command:
+Step 1: Install the following dependencies with this command:
 
 ```bash
 apt-get install \
@@ -37,7 +37,7 @@ Step 3: Install the OS-Agent:
 
 Instructions for installing the OS-Agent can be found [here](https://github.com/home-assistant/os-agent/tree/main#using-home-assistant-supervised-on-debian)
 
-Step 4: Install the Home Assisistant Supervised Debian Package:
+Step 4: Install the Home Assistant Supervised Debian Package:
 
 ```bash
 wget https://github.com/home-assistant/supervised-installer/releases/latest/download/homeassistant-supervised.deb
@@ -63,6 +63,26 @@ dpkg -i homeassistant-supervised.deb
 - tinker
 - khadas-vim3
 
+## Configuration
+
+Now login to Home Assistant via `http://<pi-host-name>:8123`. Although you can control most of it via the web interface, you may also need to adjust the configuration files, which are stored in `/usr/share/hassio/`
+
+
 ## Troubleshooting
 
 If somethings going wrong, use `journalctl -f` to get your system logs. If you are not familiar with Linux and how you can fix issues, we recommend to use our Home Assistant OS.
+
+## Uninstalling
+
+If you find yourself in a mess, you can completely remove Home Assistant Supervised with the following steps:
+```
+systemctl stop hassio-supervisor.service
+systemctl stop hassio-apparmor.service
+docker stop homeassistant...
+docker rmi -f homeassistant...
+rm -rf /usr/share/hassio
+dpkg -r homeassistant-supervised
+dpkg -r os-agent
+```
+You may also want to remove docker if you're not using it for anything else.
+
